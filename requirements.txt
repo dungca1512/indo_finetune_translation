@@ -1,0 +1,9 @@
+torch>=2.0.0
+transformers>=4.56.1
+datasets>=3.0.0
+accelerate>=1.4.0
+peft
+trl>=0.24.0
+bitsandbytes>=0.48.1
+sentencepiece
+protobuf
