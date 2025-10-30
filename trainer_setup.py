@@ -54,9 +54,6 @@ class TrainerSetup:
             train_dataset=self.train_dataset,
             eval_dataset=self.eval_dataset,
             peft_config=peft_config,
-            dataset_text_field="messages",
-            max_seq_length=self.config.training.max_seq_length,
-            tokenizer=self.tokenizer,
             args=training_args
         )
         

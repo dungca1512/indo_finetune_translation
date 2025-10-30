@@ -7,6 +7,8 @@ from config import Config
 from data_processor import DataProcessor
 from model_loader import ModelLoader
 from trainer_setup import TrainerSetup
+from save_utils import save_full_checkpoint
+from inference import run_demo
 
 
 def setup_environment():
@@ -48,9 +50,24 @@ def main():
     
     print("\n=== BƯỚC 5: LƯU MODEL ===")
     trainer_setup.save_model()
-    
+    # Lưu metadata bổ sung cùng tokenizer
+    try:
+        print("Đang lưu bản sao hoàn chỉnh (tokenizer + metadata)...")
+        save_full_checkpoint(trainer_setup.trainer, tokenizer, config.model.output_dir, config)
+    except Exception as e:
+        print(f"Lưu bổ sung thất bại: {e}")
+
     print("\n=== HOÀN TẤT ===")
     print(f"Model đã được lưu tại: {config.model.output_dir}")
+
+    # Nếu muốn chạy demo inference nhanh, set biến môi trường RUN_INFERENCE_DEMO=1
+    if os.environ.get("RUN_INFERENCE_DEMO", "0") == "1":
+        print("Chạy demo inference nhanh...")
+        try:
+            # Sử dụng đường dẫn đã lưu để tải adapter và merge như trong notebook
+            run_demo(config.model.output_dir, config.model.model_name, config.model)
+        except Exception as e:
+            print(f"Demo inference thất bại: {e}")
 
 
 if __name__ == "__main__":

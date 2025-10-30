@@ -9,7 +9,7 @@ from typing import List
 @dataclass
 class DataConfig:
     """Data configuration"""
-    data_path: str = "/content/"
+    data_path: str = "/root/indo_finetune_translation/data/"
     file_en: str = "WikiMatrix.en-id.en"
     file_id: str = "WikiMatrix.en-id.id"
     num_samples: int = 50000
@@ -29,7 +29,7 @@ class DataConfig:
 class ModelConfig:
     """Model configuration"""
     model_name: str = "SeaLLMs/SeaLLMs-v3-1.5B-Chat"
-    output_dir: str = "/kaggle/working/results_finetune"
+    output_dir: str = "/root/indo_finetune_translation/data/results_finetune"
     load_in_4bit: bool = True
     compute_dtype: str = "float16"
     trust_remote_code: bool = True
@@ -53,14 +53,14 @@ class LoraConfig:
 class TrainingConfig:
     """Training configuration"""
     num_train_epochs: int = 1
-    per_device_train_batch_size: int = 2
+    per_device_train_batch_size: int = 4
     gradient_accumulation_steps: int = 8
     eval_steps: int = 500
     save_steps: int = 500
     logging_steps: int = 50
     learning_rate: float = 2e-4
     weight_decay: float = 0.001
-    fp16: bool = True
+    fp16: bool = False
     bf16: bool = True
     max_grad_norm: float = 0.3
     warmup_ratio: float = 0.03
